@@ -1,8 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-<script>
-
 const arr = Array(100000).fill(null).map((x, i) => i + 1)
 console.time('map')
 const x = arr.map(x => x * 2)
@@ -43,13 +38,3 @@ console.log(lol(arrtest, test))
 //console.timeEnd('slice')
 
 //console.log({arr, half1, half2})
-</script>
-</head>
-<body>
-
-
-
-<div></div>
-
-</body>
-</html>
