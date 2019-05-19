@@ -1,31 +1,25 @@
 const arr = Array(100000).fill(null).map((x, i) => i + 1)
+
 console.time('map')
 const x = arr.map(x => x * 2)
 console.log({x})
 console.timeEnd('map')
 
-//console.time('slice')
-//const len = arr.length
-
 function part(len, num) {
-
-return [0, ...Array(num).fill(null).map((x, i) => len / (num / (i + 1)))]
-
+	return [0, ...Array(num - 1).fill(null).map((x, i) => Math.floor(len / (num / (i + 1))))]
 }
-console.time()
-const test = part(100, 8)
-console.log(test)
 
 function chunk(arr, part) {
-
-return part.map( (x, i) => arr.slice(part[Math.floor(i), Math.floor(i + 1)])
-
+	return part.map((x, i) => arr.slice(part[i],part[i+1]))
 }
-const arrtest = Array(100).fill(null).map((x, i) => i + 1)
 
+const arr2 = Array(100000).fill(null).map((x, i) => i + 1)
 
+const parts2 = part(arr2.length, 800)
 
-console.log(lol(arrtest, test))
+console.time()
+console.log(chunk(arr2, parts2))
+console.timeEnd()
 //function res() {
 //const p1 = new Promise(res => res(half1.map(x => x * 2)))
 //const p2 = new Promise(res => res(half2.map(x => x * 2)))
