@@ -1,34 +1,39 @@
-const arr = Array(100000).fill(null).map((x, i) => i + 1)
+function chunk(arr, num) {
+	const len = arr.length
+        const parts = [0, ...Array(num - 1)
+		       .fill(null)
+		       .map((x, i) => Math.floor(len/(num/(i + 1))))]
+	
+        const chunks = parts.map((x, i) => arr.slice(parts[i], parts[i + 1]))
+    
+	return chunks
+}
+
+function createPromises(chunks, fn) {
+	const promises = chunks.map(x => new Promise(res => res(x.map(fn))))
+
+	return promises
+}
+
+const arr1 = Array(100000).fill(null).map((x, i) => i + 1)
+
+const testfn = ( x ) => x * 2
+
 
 console.time('map')
-const x = arr.map(x => x * 2)
-console.log({x})
+
+const arr2 = arr1.map(testfn)
+
 console.timeEnd('map')
 
-function part(len, num) {
-	return [0, ...Array(num - 1).fill(null).map((x, i) => Math.floor(len / (num / (i + 1))))]
-}
 
-function chunk(arr, part) {
-	return part.map((x, i) => arr.slice(part[i],part[i+1]))
-}
+console.time('chunk promise resolve')
 
-const arr2 = Array(100000).fill(null).map((x, i) => i + 1)
+const chunks = chunk(arr1, 8)
+const promises = createPromises(chunks, testfn)
 
-const parts2 = part(arr2.length, 800)
+const result = Promise.all(promises).then(x => x.reduce((acc, cur) => acc.concat(cur),[]))
 
-console.time()
-console.log(chunk(arr2, parts2))
-console.timeEnd()
-//function res() {
-//const p1 = new Promise(res => res(half1.map(x => x * 2)))
-//const p2 = new Promise(res => res(half2.map(x => x * 2)))
-//const p3 = new Promise(res => res(half3.map(x => x * 2)))
-//const p4 = new Promise(res => res(half4.map(x => x * 2)))
-//return Promise.all([p1])
-//}
-//console.time('slice')
-//Promise.all([p1,p2,p3,p4]).then(x => console.log({x}))
-//console.timeEnd('slice')
+result.then(x => console.log(x))
 
-//console.log({arr, half1, half2})
+console.timeEnd('chunk promise resolve')
