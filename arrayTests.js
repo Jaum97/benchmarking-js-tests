@@ -47,5 +47,5 @@ function flatten(array) {
 }
 
 console.time()
-arr5 = flatten(arr4.map( x => [[x]] ))
+arr5 = flatten(arr4.map( x => [[[[x]]]] ))
 console.timeEnd()
