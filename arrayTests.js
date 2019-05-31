@@ -49,3 +49,30 @@ function flatten(array) {
 console.time()
 arr5 = flatten(arr4.map( x => [[[[x]]]] ))
 console.timeEnd()
+
+
+
+const arr = Array(10000000).fill().map((_, i) => i + 1)
+
+const subject = 567
+
+
+function removeFromArray(arr, el) {
+
+	const aux = arr
+	aux.splice(arr.findIndex(x => x === el), 1)
+    
+    return aux
+}
+
+console.time('1')
+
+const newarr1 = removeFromArray(arr, subject)
+
+console.timeEnd('1')
+
+console.time('2')
+
+const newarr = arr.filter(x => x !== subject)
+
+console.timeEnd('2')
